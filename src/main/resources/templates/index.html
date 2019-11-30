@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Juegos</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+</head>
+<body>
+<div class="container">
+    <h1 th:if="${juegos.isEmpty()}">No hay juegos</h1>
+    <div class="card-header bf-info text-white">
+        <a class="btn btn-success float-left" th:href="@{/crear}">Agregar</a>
+    </div>
+    <div class="row mt-4">
+    <th:block th:each="juego : ${juegos}">
+        <div class="col-md-12">
+            <div class="card mt-3 text-center">
+                <div class="card-header">
+                    <ul class="nav nav-pills">
+                        <li class="nav-item">
+                            <a th:href="@{/editar/{id}(id=${juego.id})}" class="btn btn-info">Editar</a>
+                        </li>
+                        <li class="nav-item">
+                            <a th:href="@{/eliminar/{id}(id=${juego.id})}" class="btn btn-danger" onclick="return confirm('¿Desea eliminar el juego?');">Eliminar</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-header">
+                    <div><h4 class="ml-2" th:text="${juego.getNombre()}"></h4></div>
+                </div>
+                <div><h5 class="card-body ml-2" th:text="${juego.descripcion}"></h5></div>
+                <div><i class="fas fa-calendar-day mb-4" th:text="${juego.anioLanzamiento}"></i></div>
+                <div>
+                    <div><h4 class="ml-2" th:text="${juego.categoria}"></h4></div>
+                </div>
+                <div class="card-header mb-2">
+                    <i class="fas fa-cloud-download-alt" th:text="${juego.descargas}"></i>
+                </div>
+            </div>
+        </div>
+    </th:block>
+    </div>
+</div>
+</body>
+</html>
