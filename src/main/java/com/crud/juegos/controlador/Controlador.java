@@ -20,10 +20,18 @@ public class Controlador {
     private JuegoServicioImpl juegoServicio;
     private List<String> categorias;
 
+    /**
+     * Elementos de la lista de categorias
+     */
     public Controlador() {
         categorias = Arrays.asList("Terror","Accion","Aventura","Carrera","Indie","Deportes","Estrategia");
     }
 
+    /**
+     *
+     * @param model permite colocar datos a la vista
+     * @return la vista al index si se realiza la accion o formulario si no
+     */
     @GetMapping("/")
     public String all(Model model){
         List<Juego> juegos = juegoServicio.juegos();
@@ -31,6 +39,11 @@ public class Controlador {
         return ("index");
     }
 
+    /**
+     *
+     * @param model permite colocar datos a la vista
+     * @return la vista al index si se realiza la accion o formulario si no
+     */
     @GetMapping("/crear")
     public String create(Model model){
         Juego juego = new Juego();
@@ -40,6 +53,13 @@ public class Controlador {
         return "formulario";
     }
 
+    /**
+     *
+     * @param juego elemento a guardar en la base de datos
+     * @param bindingResult
+     * @param model permite colocar datos a la vista
+     * @return la vista al index si se realiza la accion o formulario si no
+     */
     @PostMapping(value = "/guardar")
     public String save(@Valid @ModelAttribute Juego juego, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()){
@@ -51,6 +71,12 @@ public class Controlador {
         return "redirect:/";
     }
 
+    /**
+     *
+     * @param model permite colocar datos a la vista
+     * @param id id del elemento a modificar
+     * @return la vista al index si se realiza la accion o formulario si no
+     */
     @GetMapping("/editar/{id}")
     public String edit(Model model, @PathVariable("id") int id){
         Optional<Juego> juegoOp = Optional.ofNullable(juegoServicio.buscar(id));
@@ -64,6 +90,11 @@ public class Controlador {
         return "redirect:/";
     }
 
+    /**
+     *
+     * @param id id del elementos a eliminar
+     * @return la vista al index si se realiza la accion o formulario si no
+     */
     @GetMapping("/eliminar/{id}")
     public String delete(@PathVariable("id") int id){
         Optional<Juego> juego = Optional.ofNullable(juegoServicio.buscar(id));
